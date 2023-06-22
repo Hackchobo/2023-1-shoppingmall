@@ -1,22 +1,20 @@
 package com.green.shoppingmall.product;
 
-import com.green.shoppingmall.product.model.ProductEntity;
-import com.green.shoppingmall.product.model.ProductInsDto;
-import com.green.shoppingmall.product.model.SingSangSongDto;
+import com.green.shoppingmall.product.model.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
     private final ProductService service;
 
-    @Autowired
-    public ProductController(ProductService service) {
-        this.service = service;
-    }
 
     @PostMapping(value = "/file",consumes = {MediaType.APPLICATION_JSON_VALUE,
                                 MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -30,6 +28,11 @@ public class ProductController {
         return service.insProduct(img, dto);
     }
 
+    @PostMapping(value="/{iproduct}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public Long insProductPics(@PathVariable Long iproduct, @RequestPart List<MultipartFile> pics) throws Exception{
+        return service.insProductPics(iproduct, pics);
+    }
+
     /*@PostMapping(value = "/file", consumes = {MediaType.APPLICATION_JSON_VALUE,
                             MediaType.MULTIPART_FORM_DATA_VALUE})
     public int insSinger(@RequestPart SingSangSongDto data, @RequestPart MultipartFile file){
@@ -37,4 +40,23 @@ public class ProductController {
         System.out.println(file.getOriginalFilename());
         return 0;
     }*/
+    @GetMapping
+    public List<ProductVo> getProduct() {
+        return service.selProduct();
+    }
+
+    @GetMapping("/{iproduct}")
+    public ProductDetailResponse getProductDetail(@PathVariable Long iproduct) {
+        return service.selProductDetail(new ProductGetDetailDto(iproduct));
+    }
+
+
+    //연습했음
+    @PostMapping(value="/file", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public int singSangSong(@RequestPart MultipartFile file, @RequestPart SingSangSongDto data) {
+        System.out.println(data);
+        System.out.println(file.getOriginalFilename());
+        return 0;
+    }
+
 }

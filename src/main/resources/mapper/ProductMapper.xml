@@ -12,4 +12,29 @@
         brand = #{brand}
     </insert>
 
+    <insert id="insProductPic">
+        INSERT INTO t_product_pic
+        ( iproduct, pic )
+        VALUES
+        <foreach collection="list" item="item" open="(" separator="),(" close=")">
+            #{item.iproduct}, #{item.pic}
+        </foreach>
+    </insert>
+
+    <select id="selProduct" resultType="ProductVo">
+        SELECT iproduct, price, nm, main_pic mainPic, brand
+        FROM t_product
+    </select>
+    
+    <select id="selProductById">
+        SELECT iproduct, price, nm, main_pic mainPic, brand, ctnt
+        FROM t_product
+        where iproduct = #{iproduct}
+    </select>
+
+    <select id="selProductPics">
+        SELECT pic
+        FROM t_product_pic
+        where iproduct = #{iproduct}
+    </select>
 </mapper>

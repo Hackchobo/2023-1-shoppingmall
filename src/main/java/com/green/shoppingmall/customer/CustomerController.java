@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
     (post) 회원가입
  */
 @RestController
-@RequestMapping
+@RequestMapping("/customer")
 public class CustomerController {
     private final CustomerService service;
 
