@@ -8,4 +8,10 @@
         values
         (#{nm}, #{addr}, #{ph})
     </insert>
+
+    <select id="selCustomer">
+        SELECT icustomer, nm, ph
+        FROM t_customer
+        order by icustomer
+    </select>
 </mapper>

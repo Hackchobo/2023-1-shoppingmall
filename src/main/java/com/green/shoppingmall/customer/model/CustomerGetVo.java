@@ -1,4 +1,4 @@
-package com.green.shoppingmall.buy.model;
+package com.green.shoppingmall.customer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
